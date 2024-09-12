@@ -15,6 +15,11 @@ public class Category {
     @Column(length = 70, nullable = false)
     private String name;
 
+    @ManyToMany
+    @JoinTable(name = "categoryProduct",
+            joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
     private List<Product> products = new ArrayList<>();
 
     public Category(Long id, String name) {

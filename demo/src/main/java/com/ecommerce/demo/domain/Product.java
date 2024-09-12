@@ -24,6 +24,7 @@ public class Product {
     @Column(length = 150, nullable = true)
     private String imgURL;
 
+    @ManyToMany(mappedBy = "products")
     private List<Category> categories = new ArrayList<>();
 
     public Product(Long id, String name, String description, Double price, String imgURL) {
