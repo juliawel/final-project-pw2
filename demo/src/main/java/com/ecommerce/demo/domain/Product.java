@@ -76,4 +76,12 @@ public class Product {
     public void setImgURL(String imgURL) {
         this.imgURL = imgURL;
     }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
 }
