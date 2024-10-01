@@ -10,13 +10,14 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Table(name = "Orders")
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIMEZONE")
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant ordedAt;
 
     private main.java.com.ecommerce.demo.domain.enums.EOrderStatus status;

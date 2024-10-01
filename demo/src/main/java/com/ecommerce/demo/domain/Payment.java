@@ -5,13 +5,15 @@ import jakarta.persistence.*;
 import java.time.Instant;
 import java.util.Objects;
 
+@Entity
+@Table(name = "Payments")
 public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIMEZONE")
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant payedAt;
 
     @OneToOne

@@ -2,10 +2,12 @@ package com.ecommerce.demo.domain;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 import java.util.Objects;
 
 @Entity
+@Table(name = "OrderItems")
 public class OrderItem {
 
     @EmbeddedId
