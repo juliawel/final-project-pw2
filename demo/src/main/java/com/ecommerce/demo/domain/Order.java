@@ -1,11 +1,15 @@
 package com.ecommerce.demo.domain;
 
 import jakarta.persistence.*;
+import main.java.com.ecommerce.demo.domain.enums.EOrderStatus;
 
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
+@Entity
 public class Order {
 
     @Id
@@ -14,6 +18,8 @@ public class Order {
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIMEZONE")
     private Instant ordedAt;
+
+    private main.java.com.ecommerce.demo.domain.enums.EOrderStatus status;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -25,12 +31,13 @@ public class Order {
     @OneToMany(mappedBy = "id.order")
     private Set<OrderItem> items  = new HashSet<>();
 
-    public Order(String id, Instant ordedAt, User user, Payment payment, Set<OrderItem> items) {
+    public Order(String id, Instant ordedAt, User user, Payment payment, Set<OrderItem> items, main.java.com.ecommerce.demo.domain.enums.EOrderStatus status) {
         this.id = id;
         this.ordedAt = ordedAt;
         this.user = user;
         this.payment = payment;
         this.items = items;
+        this.status = status;
     }
 
     public Order() {
@@ -72,7 +79,28 @@ public class Order {
         return items;
     }
 
-    public void setItems(Set<OrderItem> items) {
-        this.items = items;
+    public List<Product> getProducts(){
+        return items.stream().map(x -> x.getProduct()).toList();
+    }
+
+    public EOrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(EOrderStatus status) {
+        this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return Objects.equals(id, order.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
