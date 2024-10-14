@@ -38,4 +38,28 @@ public class OrderDTO {
         payment = (entity.getPayment() == null) ? null : new PaymentDTO(entity.getPayment());
         entity.getItems().forEach(item -> this.items.add(new OrderItemDTO(item)));
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public Instant getOrderdAt() {
+        return orderdAt;
+    }
+
+    public EOrderStatus getStatus() {
+        return status;
+    }
+
+    public ClientDTO getClient() {
+        return client;
+    }
+
+    public PaymentDTO getPayment() {
+        return payment;
+    }
+
+    public List<OrderItemDTO> getItems() {
+        return items;
+    }
 }
