@@ -1,7 +1,7 @@
 package com.ecommerce.demo.domain;
 
+import com.ecommerce.demo.domain.enums.EOrderStatus;
 import jakarta.persistence.*;
-import main.java.com.ecommerce.demo.domain.enums.EOrderStatus;
 
 import java.time.Instant;
 import java.util.HashSet;
@@ -20,11 +20,11 @@ public class Order {
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant ordedAt;
 
-    private main.java.com.ecommerce.demo.domain.enums.EOrderStatus status;
+    private EOrderStatus status;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private User client;
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private Payment payment;
@@ -32,10 +32,10 @@ public class Order {
     @OneToMany(mappedBy = "id.order")
     private Set<OrderItem> items  = new HashSet<>();
 
-    public Order(String id, Instant ordedAt, User user, Payment payment, Set<OrderItem> items, main.java.com.ecommerce.demo.domain.enums.EOrderStatus status) {
+    public Order(String id, Instant ordedAt, User client, Payment payment, Set<OrderItem> items, EOrderStatus status) {
         this.id = id;
         this.ordedAt = ordedAt;
-        this.user = user;
+        this.client = client;
         this.payment = payment;
         this.items = items;
         this.status = status;
@@ -60,12 +60,12 @@ public class Order {
         this.ordedAt = ordedAt;
     }
 
-    public User getUser() {
-        return user;
+    public User getClient() {
+        return client;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setClient(User client) {
+        this.client = client;
     }
 
     public Payment getPayment() {
