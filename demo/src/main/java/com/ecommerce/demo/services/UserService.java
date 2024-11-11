@@ -6,6 +6,7 @@ import com.ecommerce.demo.dtos.UserDTO;
 import com.ecommerce.demo.repositories.RoleRepository;
 import com.ecommerce.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,6 +23,8 @@ public class UserService {
         User user = new User();
         copyDtoToEntity(dto, user);
         user.setRoles(role);
+        var senhaCriptografada = new BCryptPasswordEncoder().encode(dto.getPassword());
+        user.setPassword(senhaCriptografada);
         userRepository.save(user);
         return new UserDTO(user);
     }
