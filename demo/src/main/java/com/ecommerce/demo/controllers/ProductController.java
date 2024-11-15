@@ -2,6 +2,7 @@ package com.ecommerce.demo.controllers;
 
 import com.ecommerce.demo.dtos.ProductDTO;
 import com.ecommerce.demo.repositories.ProductRepository;
+import com.ecommerce.demo.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,11 +14,11 @@ import java.util.List;
 public class ProductController {
 
     @Autowired
-    private ProductRepository repository;
+    private ProductService service;
 
     public ResponseEntity<List<ProductDTO>> findAll() {
-
-        return null;
+        List<ProductDTO> dto = service.getAll();
+        return ResponseEntity.ok(dto);
     }
 
     public ResponseEntity<ProductDTO> findById() {
