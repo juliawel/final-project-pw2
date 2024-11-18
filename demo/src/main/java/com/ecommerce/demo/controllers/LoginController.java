@@ -23,6 +23,7 @@ public class LoginController {
     @Autowired
     private AuthenticationManager manager;
 
+    @SuppressWarnings("rawtypes")
     public ResponseEntity login(@RequestBody LoginDTO login) {
         
         var authenticationToken = new UsernamePasswordAuthenticationToken(login.username(), login.password());
