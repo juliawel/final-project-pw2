@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
-    @Query("SELECT obj FROM Roles obj WHERE obj.role = :roleName")
+    @Query("SELECT obj FROM Role obj WHERE obj.role = :roleName")
     Role searchByNomeRole(String roleName);
 }

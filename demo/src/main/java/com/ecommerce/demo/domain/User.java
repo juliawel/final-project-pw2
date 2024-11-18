@@ -32,7 +32,7 @@ public class User implements UserDetails {
     @JoinColumn(name = "role_id")
     private Role roles;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
 
     public User(){
