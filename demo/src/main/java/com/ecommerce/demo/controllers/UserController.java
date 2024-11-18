@@ -15,7 +15,7 @@ import com.ecommerce.demo.services.UserService;
 
 
 @RestController
-@RequestMapping(name = "/user")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
