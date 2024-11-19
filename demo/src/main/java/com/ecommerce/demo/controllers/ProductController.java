@@ -17,10 +17,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.ecommerce.demo.dtos.ProductDTO;
 import com.ecommerce.demo.services.ProductService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/products")
+@SecurityRequirement(name = "bearer-key")
 public class ProductController {
 
     @Autowired
