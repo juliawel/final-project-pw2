@@ -1,19 +1,20 @@
 package com.ecommerce.demo.services;
 
-import com.ecommerce.demo.domain.Category;
-import com.ecommerce.demo.domain.Product;
-import com.ecommerce.demo.dtos.CategoryDTO;
-import com.ecommerce.demo.dtos.ProductDTO;
-import com.ecommerce.demo.repositories.ProductRepository;
-import com.ecommerce.demo.services.exceptions.DatabaseException;
-import com.ecommerce.demo.services.exceptions.ResourceNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.ecommerce.demo.domain.Product;
+import com.ecommerce.demo.dtos.ProductDTO;
+import com.ecommerce.demo.dtos.ProductMinDTO;
+import com.ecommerce.demo.repositories.ProductRepository;
+import com.ecommerce.demo.services.exceptions.DatabaseException;
+import com.ecommerce.demo.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ProductService {
@@ -40,22 +41,22 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductDTO insert(ProductDTO dto){
+    public ProductMinDTO insert(ProductMinDTO dto){
 
         var product = new Product();
         copyDtoToEntity(product, dto);
         repository.save(product);
-        return new ProductDTO(product);
+        return new ProductMinDTO(product);
     }
 
     @Transactional
-    public ProductDTO update(long id, ProductDTO dto){
+    public ProductMinDTO update(long id, ProductMinDTO dto){
 
         try{
             var product = repository.getReferenceById(id);
             copyDtoToEntity(product, dto);
             repository.save(product);
-            return new ProductDTO(product);
+            return new ProductMinDTO(product);
         } catch(EntityNotFoundException e){
             throw new ResourceNotFoundException("Product not found");
         }
@@ -72,17 +73,12 @@ public class ProductService {
         }
     }
 
-    private void copyDtoToEntity(Product entity, ProductDTO dto){
+    private void copyDtoToEntity(Product entity, ProductMinDTO dto){
         entity.setId(dto.getId());
         entity.setName(dto.getName());
         entity.setDescription(dto.getDescription());
         entity.setPrice(dto.getPrice());
         entity.setImgURL(dto.getImgUrl());
         entity.getCategories().clear();
-        for(CategoryDTO catDto : dto.getCategories()){
-            Category category = new Category();
-            category.setId(catDto.getId());
-            entity.getCategories().add(category);
-        }
     }
 }
