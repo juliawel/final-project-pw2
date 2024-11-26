@@ -1,20 +1,21 @@
 package com.ecommerce.demo.services;
 
-import com.ecommerce.demo.domain.Category;
-import com.ecommerce.demo.domain.Product;
-import com.ecommerce.demo.dtos.CategoryDTO;
-import com.ecommerce.demo.dtos.ProductDTO;
-import com.ecommerce.demo.repositories.CategoryRepository;
-import com.ecommerce.demo.services.exceptions.DatabaseException;
-import com.ecommerce.demo.services.exceptions.ResourceNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.ecommerce.demo.domain.Category;
+import com.ecommerce.demo.dtos.CategoryDTO;
+import com.ecommerce.demo.dtos.CategoryMinDTO;
+import com.ecommerce.demo.repositories.CategoryRepository;
+import com.ecommerce.demo.services.exceptions.DatabaseException;
+import com.ecommerce.demo.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class CategoryService {
@@ -41,20 +42,20 @@ public class CategoryService {
     }
 
     @Transactional
-    public CategoryDTO insert(CategoryDTO dto){
+    public CategoryMinDTO insert(CategoryMinDTO dto){
         var category = new Category();
         copyDtoToEntity(category, dto);
         repository.save(category);
-        return new CategoryDTO(category);
+        return new CategoryMinDTO(category);
     }
 
     @Transactional
-    public CategoryDTO update(long id, CategoryDTO dto){
+    public CategoryMinDTO update(long id, CategoryMinDTO dto){
         try{
             var category = repository.getReferenceById(id);
             copyDtoToEntity(category, dto);
             repository.save(category);
-            return new CategoryDTO(category);
+            return new CategoryMinDTO(category);
         } catch (EntityNotFoundException e){
             throw new ResourceNotFoundException("Category not found");
         }
@@ -71,14 +72,9 @@ public class CategoryService {
         }
     }
 
-    private void copyDtoToEntity(Category entity, CategoryDTO dto){
+    private void copyDtoToEntity(Category entity, CategoryMinDTO dto){
         entity.setId(dto.getId());
         entity.setName(dto.getName());
         entity.getProducts().clear();
-        for(ProductDTO prodDto : dto.getProducts()){
-            Product product = new Product();
-            product.setId(prodDto.getId());
-            entity.getProducts().add(product);
-        }
     }
 }
