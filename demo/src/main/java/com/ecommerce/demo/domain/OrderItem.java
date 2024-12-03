@@ -19,11 +19,11 @@ public class OrderItem {
     public OrderItem() {
     }
 
-    public OrderItem(Order order, Product product, Integer quantity, Double price){
+    public OrderItem(Order order, Product product, Integer quantity){
         id.setOrder(order);
         id.setProduct(product);
         this.quantity = quantity;
-        this.price = price;
+        this.price = setPrice(quantity);
     }
 
     public Order getOrder(){
@@ -54,8 +54,9 @@ public class OrderItem {
         return price;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    private Double setPrice(Integer quantity) {
+        var price = getProduct().getPrice() * quantity;
+        return price;
     }
 
     @Override

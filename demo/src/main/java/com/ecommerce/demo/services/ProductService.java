@@ -50,18 +50,19 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductMinDTO update(long id, ProductMinDTO dto){
+    public ProductMinDTO update(long id, ProductMinDTO dto) {
 
-        try{
+        try {
             var product = repository.getReferenceById(id);
             copyDtoToEntity(product, dto);
             repository.save(product);
             return new ProductMinDTO(product);
-        } catch(EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Product not found");
         }
     }
 
+    @Transactional
     public void delete(long id){
 
         if(!repository.existsById(id))

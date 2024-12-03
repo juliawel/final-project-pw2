@@ -14,14 +14,14 @@ public class OrderDTO {
     private EOrderStatus status;
     private ClientDTO client;
     private PaymentDTO payment;
-    private List<OrderItemDTO> items = new ArrayList<>();
+    private List<OrderItemMinDTO> items = new ArrayList<>();
 
     public OrderDTO(String id,
                     Instant createdAt,
                     EOrderStatus status,
                     ClientDTO client,
                     PaymentDTO payment,
-                    List<OrderItemDTO> items) {
+                    List<OrderItemMinDTO> items) {
         this.id = id;
         this.orderdAt = createdAt;
         this.status = status;
@@ -36,7 +36,7 @@ public class OrderDTO {
         status = entity.getStatus();
         client = new ClientDTO(entity.getClient());
         payment = (entity.getPayment() == null) ? null : new PaymentDTO(entity.getPayment());
-        entity.getItems().forEach(item -> this.items.add(new OrderItemDTO(item)));
+        entity.getItems().forEach(item -> this.items.add(new OrderItemMinDTO(item)));
     }
 
     public String getId() {
@@ -59,7 +59,7 @@ public class OrderDTO {
         return payment;
     }
 
-    public List<OrderItemDTO> getItems() {
+    public List<OrderItemMinDTO> getItems() {
         return items;
     }
 }

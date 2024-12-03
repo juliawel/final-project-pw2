@@ -75,6 +75,5 @@ public class CategoryService {
     private void copyDtoToEntity(Category entity, CategoryMinDTO dto){
         entity.setId(dto.getId());
         entity.setName(dto.getName());
-        entity.getProducts().clear();
     }
 }
