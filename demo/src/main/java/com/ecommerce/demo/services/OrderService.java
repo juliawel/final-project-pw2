@@ -7,7 +7,6 @@ import com.ecommerce.demo.domain.Product;
 import com.ecommerce.demo.domain.User;
 import com.ecommerce.demo.domain.enums.EOrderStatus;
 import com.ecommerce.demo.dtos.OrderDTO;
-import com.ecommerce.demo.dtos.OrderItemDTO;
 import com.ecommerce.demo.dtos.OrderItemMinDTO;
 import com.ecommerce.demo.repositories.OrderItemRepository;
 import com.ecommerce.demo.repositories.OrderRepository;
