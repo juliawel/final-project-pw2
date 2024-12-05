@@ -5,9 +5,12 @@ import com.ecommerce.demo.domain.User;
 import com.ecommerce.demo.dtos.UserDTO;
 import com.ecommerce.demo.repositories.RoleRepository;
 import com.ecommerce.demo.repositories.UserRepository;
+import com.ecommerce.demo.services.exceptions.ResourceNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -18,7 +21,8 @@ public class UserService {
     @Autowired
     private RoleRepository roleRepository;
 
-    public UserDTO insert(UserDTO dto){
+    @Transactional
+    public UserDTO insert(UserDTO dto) {
         Role role = roleRepository.searchByNomeRole(dto.getRole());
         User user = new User();
         copyDtoToEntity(dto, user);
@@ -26,6 +30,16 @@ public class UserService {
         var senhaCriptografada = new BCryptPasswordEncoder().encode(dto.getPassword());
         user.setPassword(senhaCriptografada);
         userRepository.save(user);
+        return new UserDTO(user);
+    }
+    
+    @Transactional(readOnly = true)
+    public UserDTO findByUsername(String username){
+
+        var user = userRepository.searchByUsername(username);
+        if(user == null)
+            throw new ResourceNotFoundException("User not found");
+
         return new UserDTO(user);
     }
 
